@@ -6,6 +6,8 @@ RUN apk --update --virtual build-deps add \
         autoconf \
         make \
         gcc \
+        g++ \
+        libtool \
         curl-dev \
 		    icu-dev \
         freetype-dev \
@@ -45,7 +47,7 @@ RUN apk --update --virtual build-deps add \
         redis \
         rm -rf /tmp/pear && \
     docker-php-ext-enable \
-        redis \
+        redis &&\
     apk del \
         build-deps
 
