@@ -9,16 +9,13 @@ RUN apk --update --virtual build-deps add \
         curl-dev \
 		    icu-dev \
         freetype-dev \
-        imagemagick-dev \
         pcre-dev \
-        postgresql-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libxml2-dev && \
     apk add \
     	  icu \
         libintl \
-        imagemagick \
         freetype \
         libintl \
         libjpeg-turbo \
@@ -45,14 +42,10 @@ RUN apk --update --virtual build-deps add \
         opcache && \
         pecl channel-update pecl.php.net && \
     printf "\n" | pecl install -o -f \
-        imagick \
         redis \
-        xdebug-2.5.5 && \
         rm -rf /tmp/pear && \
     docker-php-ext-enable \
-        imagick \
         redis \
-        xdebug && \
     apk del \
         build-deps
 
