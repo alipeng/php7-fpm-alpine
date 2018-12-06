@@ -9,7 +9,7 @@ RUN apk --update --virtual build-deps add \
         g++ \
         libtool \
         curl-dev \
-		    icu-dev \
+	icu-dev \
         freetype-dev \
         pcre-dev \
         libjpeg-turbo-dev \
@@ -45,6 +45,7 @@ RUN apk --update --virtual build-deps add \
         pecl channel-update pecl.php.net && \
     printf "\n" | pecl install -o -f \
         redis \
+	mongodb \
         rm -rf /tmp/pear && \
     docker-php-ext-enable \
         redis &&\
