@@ -48,6 +48,7 @@ RUN apk --update --virtual build-deps add \
 	mongodb \
         rm -rf /tmp/pear && \
     docker-php-ext-enable \
+	mongodb \
         redis &&\
     apk del \
         build-deps
