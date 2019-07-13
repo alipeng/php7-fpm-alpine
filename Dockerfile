@@ -8,12 +8,12 @@ RUN apk --update --virtual build-deps add \
         gcc \
         g++ \
         libtool \
-        curl-dev \
-	icu-dev \
+	      icu-dev \
         freetype-dev \
         pcre-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        libzip-dev \
         libxml2-dev && \
     apk add \
     	  icu \
@@ -22,6 +22,7 @@ RUN apk --update --virtual build-deps add \
         libintl \
         libjpeg-turbo \
         libpng \
+        libzip \
         libltdl \
         libxml2 && \
     docker-php-ext-configure gd \
@@ -36,19 +37,14 @@ RUN apk --update --virtual build-deps add \
         exif \
         gd \
         zip \
-        curl \
-        iconv \
         intl \
-        mbstring \
         pdo_mysql \
         opcache && \
         pecl channel-update pecl.php.net && \
     printf "\n" | pecl install -o -f \
         redis \
-	mongodb \
         rm -rf /tmp/pear && \
     docker-php-ext-enable \
-	mongodb \
         redis &&\
     apk del \
         build-deps
