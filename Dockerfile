@@ -2,36 +2,25 @@ FROM php:fpm-alpine
 
 LABEL maintainer Alipeng <lipeng.yang@mobvista.com>
 
-RUN apk --update --virtual build-deps add \
-        autoconf \
-        make \
-        gcc \
-        g++ \
-        libtool \
-	icu-dev \
-	postgresql-dev && \
-        freetype-dev \
-        pcre-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        libzip-dev \
-        libxml2-dev && \
-    apk add \
-    	icu \
-        libintl \
-        freetype \
-        libintl \
-        libjpeg-turbo \
-        libpng \
-        libzip \
-        libltdl \
-        libxml2 && \
+RUN apk add --no-cache --virtual .build-deps \
+      $PHPIZE_DEPS \
+      libtool \
+      icu-dev \
+      curl-dev \
+      freetype-dev \
+      imagemagick-dev \
+      pcre-dev \
+      postgresql-dev \
+      libjpeg-turbo-dev \
+      libpng-dev \
+      libzip-dev \
+      libxml2-dev; \
     docker-php-ext-configure gd \
         --with-gd \
         --with-freetype-dir=/usr/include/ \
         --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-configure bcmath && \
+        --with-jpeg-dir=/usr/include/; \
+    docker-php-ext-configure bcmath; \
     docker-php-ext-install \
         soap \
         bcmath \
@@ -43,17 +32,24 @@ RUN apk --update --virtual build-deps add \
         tokenizer \
         xml \
         pcntl \
-	pgsql \
-    	pdo_pgsql \
+        pgsql \
+        pdo_pgsql \
         opcache && \
-        pecl channel-update pecl.php.net && \
+        pecl channel-update pecl.php.net; \
     printf "\n" | pecl install -o -f \
-        redis \
-        rm -rf /tmp/pear && \
+        redis; \
     docker-php-ext-enable \
-        redis &&\
-    apk del \
-        build-deps
+        redis;\
+    docker-php-source delete; \
+    runDeps="$( \
+      scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
+        | tr ',' '\n' \
+        | sort -u \
+        | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+    )"; \
+	  apk add --no-cache $runDeps; \
+	  apk del --no-network .build-deps; \
+    rm -rf /tmp/pear /var/cache/apk/* ~/.pearrc
 
 WORKDIR /var/www
 
