@@ -39,6 +39,11 @@ RUN apk --update --virtual build-deps add \
         zip \
         intl \
         pdo_mysql \
+        tokenizer \
+        xml \
+        pcntl \
+	pgsql \
+    	pdo_pgsql \
         opcache && \
         pecl channel-update pecl.php.net && \
     printf "\n" | pecl install -o -f \
