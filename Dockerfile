@@ -16,13 +16,14 @@ RUN apk add --no-cache --virtual .build-deps \
       libzip-dev \
       libxml2-dev; \
     docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/include/; \
-    docker-php-ext-configure bcmath; \
-    docker-php-ext-install \
+      --enable-gd \
+      --with-freetype \
+      --with-jpeg \
+      --with-webp \
+      --with-freetype \
+      --enable-gd-native-ttf \
+      bcmath; \
+    docker-php-ext-install  -j "$(nproc)" \
         soap \
         bcmath \
         exif \
