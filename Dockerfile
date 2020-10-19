@@ -19,6 +19,7 @@ RUN apk add --no-cache --virtual .build-deps \
         --with-gd \
         --with-freetype-dir=/usr/include/ \
         --with-png-dir=/usr/include/ \
+        --enable-gd-native-ttf \
         --with-jpeg-dir=/usr/include/; \
     docker-php-ext-configure bcmath; \
     docker-php-ext-install \
