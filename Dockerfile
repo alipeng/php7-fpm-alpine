@@ -26,7 +26,7 @@ RUN apk add --no-cache --virtual .build-deps \
       --with-freetype \
       --with-webp \
       bcmath; \
-    docker-php-ext-install  -j "$(nproc)" \
+    docker-php-ext-install -j "$(nproc)" \
         soap \
         bcmath \
         exif \
