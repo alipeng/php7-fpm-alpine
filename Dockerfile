@@ -14,14 +14,17 @@ RUN apk add --no-cache --virtual .build-deps \
       libjpeg-turbo-dev \
       libpng-dev \
       libzip-dev \
+      libwebp-dev \
+      libxpm-dev \
       libxml2-dev; \
     docker-php-ext-configure gd \
       --enable-gd \
-      --with-freetype \
       --with-jpeg \
-      --with-webp \
       --with-freetype \
-      --enable-gd-native-ttf \
+	    --with-gnu-ld \
+      --with-xpm \
+      --with-freetype \
+      --with-webp \
       bcmath; \
     docker-php-ext-install  -j "$(nproc)" \
         soap \
