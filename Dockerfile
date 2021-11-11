@@ -19,6 +19,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
   swoole \
   imagick \
   redis \
-  mongodb && \
+  mongodb \
+  xdebug && \
   #somke test
   php --version
